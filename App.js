@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView, FlatList } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { useState } from 'react';
 
 export default function App() {
@@ -29,11 +29,13 @@ export default function App() {
         <Button title = "Add Goal" onPress={addGoalHandler}/>
       </View>
       <View style={styles.goalsContainer}>
-        <FlatList>
+        <ScrollView>
+        {courseGoals.map((goal) => (
           <View key={goal} style = {styles.goalItem}>
             <Text style={styles.goalText}>{goal}</Text>
           </View>
-        </FlatList>
+        ))}
+        </ScrollView>
       </View>
     </View>
   );
