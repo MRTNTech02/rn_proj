@@ -12,7 +12,7 @@ function GoalInput(props) {
     props.onAddGoal(enteredGoalText);
     setEnteredGoalText('');
   }
-
+ 
   return (
     <View style={styles.inputContainer}>
       <TextInput 
