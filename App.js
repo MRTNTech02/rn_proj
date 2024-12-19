@@ -1,38 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TextInput, View, FlatList } from 'react-native';
-import { useState } from 'react';
-import GoalItem from './components/GoalItem';
-import GoalInput from './components/GoalInput';
+import { StatusBar } from "expo-status-bar";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  FlatList,
+} from "react-native";
+import { useState } from "react";
+import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
+  const [modalisVisible, setModalIsVisible] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
 
+  function startAddGoalHandler() {
+    setModalIsVisible(true);
+  }
+
   function addGoalHandler(enteredGoalText) {
-    setCourseGoals(currentCourseGoals => [
-      ...currentCourseGoals, 
+    setCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
       { text: enteredGoalText, id: Math.random().toString() },
     ]);
   }
 
   function deleteGoalHandler(id) {
-    setCourseGoals(currentCourseGoals => {
+    setCourseGoals((currentCourseGoals) => {
       return currentCourseGoals.filter((goal) => goal.id !== id);
     });
   }
 
   return (
     <View style={styles.appContainer}>
+      <Button
+        title="Add New Goal"
+        color="#5e0acc"
+        onPress={startAddGoalHandler}
+      />
       <View style={styles.appTitle}>
         <Text style={styles.appTitle}>TO-DO List</Text>
       </View>
-      <GoalInput onAddGoal={addGoalHandler} />
+      <GoalInput visible={modalisVisible} onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
-        <FlatList 
+        <FlatList
           alwaysBounceVertical={false}
           data={courseGoals}
           renderItem={(itemData) => {
             return (
-              <GoalItem 
+              <GoalItem
                 text={itemData.item.text}
                 id={itemData.item.id}
                 onDeleteItem={deleteGoalHandler}
@@ -52,16 +69,16 @@ const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
     padding: 50,
-    paddingHorizontal: 16
-  }, 
+    paddingHorizontal: 16,
+  },
   appTitle: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#cccccc'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#cccccc",
   },
   goalsContainer: {
-    flex: 4
-  }
+    flex: 4,
+  },
 });
